@@ -3,118 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MY To-Do-App</title>
+  <title>MY To-Do-App 💯</title>
   <style>
-    /* Global Styles */
     body {
-        background-color: #e2e8f0; /* base color */
-        font-family: sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        padding: 1rem;
-
-        /* Gradient + Pattern */
-        background: linear-gradient(135deg, #60a5fa, #3b82f6); 
-        background-image: 
-            url('https://www.transparenttextures.com/patterns/cubes.png'),
-            linear-gradient(135deg, #60a5fa, #3b82f6);
-
-        background-blend-mode: overlay; /* makes texture blend nicely */
-}
-
-
-    /* Container */
+      background-color: #e2e8f0;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+      background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+    }
     .app-container {
       width: 100%;
       max-width: 700px;
-      margin: auto;
-      background-color: #42a7d9;
-      border-radius: 10px;
     }
-
-    /* Card */
     .todo-card {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 12px;
       padding: 2rem;
     }
-
-    /* Header */
     .header h1 {
       font-size: 1.75rem;
       font-weight: bold;
-      color: rgb(13, 13, 13);
+      color: #0f172a;
       margin: 0;
     }
-
-    /* Form */
-    .todo-form {
+    form {
       display: flex;
       gap: 0.75rem;
       margin-top: 1rem;
     }
-
-    /* Input */
-    .todo-form input,
-    #search-input {
+    form input {
       flex-grow: 1;
       padding: 0.75rem;
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 8px;
-      color: white;
-      width: 100%;
+      border: 1px solid #ddd;
     }
-
-    .todo-form input::placeholder,
-    #search-input::placeholder {
-      color: #cbd5e1; /* slate-300 */
-    }
-
-    .todo-form input:focus,
-    #search-input:focus {
-      outline: none;
-      border-color: #38bdf8; /* sky-400 */
-      box-shadow: 0 0 0 2px #38bdf8;
-    }
-
-    /* Button */
-    .todo-form button {
-      background-color: #0ea5e9; /* sky-500 */
+    form button {
+      background-color: #0ea5e9;
       color: white;
       font-weight: bold;
       padding: 0.75rem 1.5rem;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.2s ease;
     }
-
-    .todo-form button:hover {
-      background-color: #0284c7; /* sky-600 */
+    form button:hover {
+      background-color: #0284c7;
     }
-
-    .todo-form button:disabled {
-      background-color: rgba(14, 165, 233, 0.5); /* sky-300/50 */
-      cursor: not-allowed;
-    }
-
-    /* Search bar container */
     .search-container {
       position: relative;
       margin-top: 1rem;
     }
-
     #search-input {
       width: 580px;
-      padding-left: 2.5rem; /* space for icon */
+      padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+      border-radius: 8px;
+      border: 1px solid #ddd;
     }
-
-    /* Optional search icon */
+    #search-input::placeholder {
+      color: #cbd5e1;
+    }
     .search-container::before {
       content: "🔍";
       position: absolute;
@@ -124,53 +77,40 @@
       font-size: 1rem;
       color: #cbd5e1;
     }
-
-    /* Task List */
-    .task-list {
-      margin-top: 1.5rem;
+    #search-input:focus, .todo-form input:focus {
+      outline: none;
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 2px #38bdf8;
+    }
+    ul {
       list-style: none;
       padding: 0;
+      margin-top: 1rem;
     }
-
-    .task-item {
+    ul li {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(255, 255, 255, 0.15);
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
-      margin-bottom: 0.75rem;
-      transition: background 0.2s;
-    }
-
-    .task-item:hover {
-      background: rgba(255, 255, 255, 0.25);
-    }
-
-    .task-text {
-      flex-grow: 1;
-      margin-left: 0.5rem;
-      color: white;
-    }
-
-    .task-completed {
-      text-decoration: line-through;
-      opacity: 0.7;
-    }
-
-    .delete-btn {
-      background: #ef4444;
-      border: none;
-      color: white;
-      font-weight: bold;
-      padding: 0.5rem 0.75rem;
+      padding: 0.75rem;
+      background: #f1f5f9;
       border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.2s;
+      margin-bottom: 0.5rem;
     }
-
-    .delete-btn:hover {
-      background: #dc2626;
+    ul li span {
+      flex-grow: 1;
+    }
+    ul li button {
+      margin-left: 0.5rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    ul li button.done {
+      color: #22c55e;
+    }
+    ul li button.delete {
+      color: #ef4444;
     }
   </style>
 </head>
@@ -178,71 +118,92 @@
   <div class="app-container">
     <div class="todo-card">
       <div class="header">
-        <h1>MY To-Do-App ✅</h1>
+        <h1>MY To-Do-App ✅ </h1>
       </div>
 
-      <!-- Add Task Form -->
-      <form id="todo-form" class="todo-form">
-        <input type="text" id="todo-input" placeholder="Add a new task...">
+      <!-- Add Task -->
+      <form id="todo-form">
+        <input type="text" id="todo-input" placeholder="Add a new task..." required>
         <button type="submit">Add</button>
       </form>
 
-      <!-- Search Tasks -->
+      <!-- Search -->
       <div class="search-container">
         <input type="text" id="search-input" placeholder="Search tasks...">
       </div>
 
       <!-- Task List -->
-      <ul id="task-list" class="task-list"></ul>
+      <ul id="task-list"></ul>
     </div>
   </div>
 
   <script>
-    const todoForm = document.getElementById("todo-form");
-    const todoInput = document.getElementById("todo-input");
-    const taskList = document.getElementById("task-list");
+    const form = document.getElementById("todo-form");
+    const input = document.getElementById("todo-input");
     const searchInput = document.getElementById("search-input");
+    const taskList = document.getElementById("task-list");
 
-    // Add Task
-    todoForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const taskText = todoInput.value.trim();
+    // Load tasks from backend
+    async function loadTasks() {
+      const res = await fetch("/tasks");
+      const tasks = await res.json();
+      displayTasks(tasks);
+    }
 
-      if (taskText === "") return;
-
-      const li = document.createElement("li");
-      li.className = "task-item";
-
-      li.innerHTML = `
-        <input type="checkbox" class="task-check">
-        <span class="task-text">${taskText}</span>
-        <button class="delete-btn">X</button>
-      `;
-
-      taskList.appendChild(li);
-      todoInput.value = "";
-    });
-
-    // Complete / Delete Task
-    taskList.addEventListener("click", (e) => {
-      if (e.target.classList.contains("delete-btn")) {
-        e.target.parentElement.remove();
-      }
-      if (e.target.classList.contains("task-check")) {
-        const taskText = e.target.nextElementSibling;
-        taskText.classList.toggle("task-completed");
-      }
-    });
-
-    // Search Filter
-    searchInput.addEventListener("input", () => {
-      const filter = searchInput.value.toLowerCase();
-      const tasks = taskList.getElementsByTagName("li");
-      Array.from(tasks).forEach((task) => {
-        const text = task.querySelector(".task-text").textContent.toLowerCase();
-        task.style.display = text.includes(filter) ? "flex" : "none";
+    // Display tasks
+    function displayTasks(tasks) {
+      taskList.innerHTML = "";
+      tasks.forEach(task => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <span style="text-decoration:${task.completed ? 'line-through' : 'none'}">
+            ${task.title}
+          </span>
+          <div>
+            <button class="done" onclick="toggleTask(${task.id})">${task.completed ? '↩️' : '✔️'}</button>
+            <button class="delete" onclick="deleteTask(${task.id})">❌</button>
+          </div>
+        `;
+        taskList.appendChild(li);
       });
+    }
+
+    // Add task
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const title = input.value.trim();
+      if (!title) return;
+      await fetch("/tasks", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({title})
+      });
+      input.value = "";
+      loadTasks();
     });
+
+    // Toggle complete
+    async function toggleTask(id) {
+      await fetch(`/tasks/${id}`, {method: "PUT"});
+      loadTasks();
+    }
+
+    // Delete task
+    async function deleteTask(id) {
+      await fetch(`/tasks/${id}`, {method: "DELETE"});
+      loadTasks();
+    }
+
+    // Search
+    searchInput.addEventListener("input", async () => {
+      const res = await fetch("/tasks");
+      const tasks = await res.json();
+      const filtered = tasks.filter(t => t.title.toLowerCase().includes(searchInput.value.toLowerCase()));
+      displayTasks(filtered);
+    });
+
+    // Initial load
+    loadTasks();
   </script>
 </body>
 </html>
