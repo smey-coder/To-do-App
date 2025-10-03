@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MY To-Do-App</title>
+  <style>
+    /* Global Styles */
+    body {
+        background-color: #e2e8f0; /* base color */
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 1rem;
+
+        /* Gradient + Pattern */
+        background: linear-gradient(135deg, #60a5fa, #3b82f6); 
+        background-image: 
+            url('https://www.transparenttextures.com/patterns/cubes.png'),
+            linear-gradient(135deg, #60a5fa, #3b82f6);
+
+        background-blend-mode: overlay; /* makes texture blend nicely */
+}
+
+
+    /* Container */
+    .app-container {
+      width: 100%;
+      max-width: 700px;
+      margin: auto;
+      background-color: #42a7d9;
+      border-radius: 10px;
+    }
+
+    /* Card */
+    .todo-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+
+    /* Header */
+    .header h1 {
+      font-size: 1.75rem;
+      font-weight: bold;
+      color: rgb(13, 13, 13);
+      margin: 0;
+    }
+
+    /* Form */
+    .todo-form {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    /* Input */
+    .todo-form input,
+    #search-input {
+      flex-grow: 1;
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      color: white;
+      width: 100%;
+    }
+
+    .todo-form input::placeholder,
+    #search-input::placeholder {
+      color: #cbd5e1; /* slate-300 */
+    }
+
+    .todo-form input:focus,
+    #search-input:focus {
+      outline: none;
+      border-color: #38bdf8; /* sky-400 */
+      box-shadow: 0 0 0 2px #38bdf8;
+    }
+
+    /* Button */
+    .todo-form button {
+      background-color: #0ea5e9; /* sky-500 */
+      color: white;
+      font-weight: bold;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .todo-form button:hover {
+      background-color: #0284c7; /* sky-600 */
+    }
+
+    .todo-form button:disabled {
+      background-color: rgba(14, 165, 233, 0.5); /* sky-300/50 */
+      cursor: not-allowed;
+    }
+
+    /* Search bar container */
+    .search-container {
+      position: relative;
+      margin-top: 1rem;
+    }
+
+    #search-input {
+      width: 580px;
+      padding-left: 2.5rem; /* space for icon */
+    }
+
+    /* Optional search icon */
+    .search-container::before {
+      content: "🔍";
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      color: #cbd5e1;
+    }
+
+    /* Task List */
+    .task-list {
+      margin-top: 1.5rem;
+      list-style: none;
+      padding: 0;
+    }
+
+    .task-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      transition: background 0.2s;
+    }
+
+    .task-item:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .task-text {
+      flex-grow: 1;
+      margin-left: 0.5rem;
+      color: white;
+    }
+
+    .task-completed {
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+
+    .delete-btn {
+      background: #ef4444;
+      border: none;
+      color: white;
+      font-weight: bold;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .delete-btn:hover {
+      background: #dc2626;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <div class="todo-card">
+      <div class="header">
+        <h1>MY To-Do-App ✅</h1>
+      </div>
+
+      <!-- Add Task Form -->
+      <form id="todo-form" class="todo-form">
+        <input type="text" id="todo-input" placeholder="Add a new task...">
+        <button type="submit">Add</button>
+      </form>
+
+      <!-- Search Tasks -->
+      <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search tasks...">
+      </div>
+
+      <!-- Task List -->
+      <ul id="task-list" class="task-list"></ul>
+    </div>
+  </div>
+
+  <script>
+    const todoForm = document.getElementById("todo-form");
+    const todoInput = document.getElementById("todo-input");
+    const taskList = document.getElementById("task-list");
+    const searchInput = document.getElementById("search-input");
+
+    // Add Task
+    todoForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const taskText = todoInput.value.trim();
+
+      if (taskText === "") return;
+
+      const li = document.createElement("li");
+      li.className = "task-item";
+
+      li.innerHTML = `
+        <input type="checkbox" class="task-check">
+        <span class="task-text">${taskText}</span>
+        <button class="delete-btn">X</button>
+      `;
+
+      taskList.appendChild(li);
+      todoInput.value = "";
+    });
+
+    // Complete / Delete Task
+    taskList.addEventListener("click", (e) => {
+      if (e.target.classList.contains("delete-btn")) {
+        e.target.parentElement.remove();
+      }
+      if (e.target.classList.contains("task-check")) {
+        const taskText = e.target.nextElementSibling;
+        taskText.classList.toggle("task-completed");
+      }
+    });
+
+    // Search Filter
+    searchInput.addEventListener("input", () => {
+      const filter = searchInput.value.toLowerCase();
+      const tasks = taskList.getElementsByTagName("li");
+      Array.from(tasks).forEach((task) => {
+        const text = task.querySelector(".task-text").textContent.toLowerCase();
+        task.style.display = text.includes(filter) ? "flex" : "none";
+      });
+    });
+  </script>
+</body>
+</html>
